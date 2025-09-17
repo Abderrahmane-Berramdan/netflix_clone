@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:netflix_clone/consts/color.dart';
 import 'package:netflix_clone/models/movie_model.dart';
@@ -11,16 +12,29 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<MovieModel> movielist = [];
+  List<MovieModel> nowPlayingMoviesList = [];
+  List<MovieModel> trendingMoviesList = [];
+  List<MovieModel> popularTvShowsList = [];
+  List<MovieModel> upcomingMoviesList = [];
+  List<MovieModel> topRatedMoviesList = [];
   bool isLoading = false;
 
   void fetchMovie() async {
     setState(() {
       isLoading = true;
     });
-    final response = await MovieApi.fetchMovie();
+    final nowPlayingMoviesResponse = await MovieApi.fetchNowPlayingMovies();
+    final trendingMovieResponse = await MovieApi.fetchTrendingMovies();
+    final popularTvResponse = await MovieApi.fetchPopularTvShows();
+    final upcomingMoviesResponse = await MovieApi.fetchUpcomingMovies();
+    final topRatedMoviesResponse = await MovieApi.fetchTopRatedMovies();
+
     setState(() {
-      movielist = response;
+      nowPlayingMoviesList = nowPlayingMoviesResponse;
+      trendingMoviesList = trendingMovieResponse;
+      popularTvShowsList = popularTvResponse;
+      upcomingMoviesList = upcomingMoviesResponse;
+      topRatedMoviesList = topRatedMoviesResponse;
       isLoading = false;
     });
   }
@@ -118,13 +132,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: 400,
                   child: PageView.builder(
-                    itemCount: movielist.length,
+                    itemCount: nowPlayingMoviesList.length,
                     itemBuilder: (context, index) {
-                      return ClipRRect(
-                        borderRadius: BorderRadiusGeometry.circular(20),
-                        child: Image.network(
-                          "https://image.tmdb.org/t/p/original${movielist[index].posterPath}",
-                          fit: BoxFit.fill,
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: ClipRRect(
+                          borderRadius: BorderRadiusGeometry.circular(20),
+                          child: CachedNetworkImage(
+                            imageUrl: "https://image.tmdb.org/t/p/original${nowPlayingMoviesList[index].posterPath}",
+                            placeholder: (context, url) => CircularProgressIndicator(color: white,),
+                            fit: BoxFit.fill,
+                          ),
                         ),
                       );
                     },
@@ -203,14 +221,108 @@ class _HomeScreenState extends State<HomeScreen> {
                   ? Center(child: CircularProgressIndicator(color: white))
                   : ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      itemCount: movielist.length,
+                      itemCount: trendingMoviesList.length,
                       itemBuilder: (context, index) {
                         return Container(
                           margin: EdgeInsets.symmetric(horizontal: 5),
                           height: 200,
-                          width: 170,
-                          child: Image.network(
-                            "https://image.tmdb.org/t/p/original${movielist[index].posterPath}",
+                          width: 150,
+                          child: CachedNetworkImage(
+                            imageUrl:"https://image.tmdb.org/t/p/original${trendingMoviesList[index].posterPath}",
+                            placeholder: (context, url) => CircularProgressIndicator(),
+                            fit: BoxFit.fill,
+                          ),
+                        );
+                      },
+                    ),
+            ),
+            SizedBox(height: 15),
+            Text(
+              "Popular TV Series - Most - Watch For You",
+              style: TextStyle(
+                color: white,
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
+              ),
+            ),
+            SizedBox(height: 15),
+            SizedBox(
+              height: 200,
+              child: isLoading
+                  ? Center(child: CircularProgressIndicator(color: white))
+                  : ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: popularTvShowsList.length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          margin: EdgeInsets.symmetric(horizontal: 5),
+                          height: 200,
+                          width: 150,
+                          child: CachedNetworkImage(
+                            imageUrl:"https://image.tmdb.org/t/p/original${popularTvShowsList[index].posterPath}",
+                            placeholder: (context, url) => CircularProgressIndicator(),
+                            fit: BoxFit.fill,
+                          ),
+                        );
+                      },
+                    ),
+            ),
+            SizedBox(height: 15),
+            Text(
+              "Upcoming Movies",
+              style: TextStyle(
+                color: white,
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
+              ),
+            ),
+            SizedBox(height: 15),
+            SizedBox(
+              height: 200,
+              child: isLoading
+                  ? Center(child: CircularProgressIndicator(color: white))
+                  : ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: upcomingMoviesList.length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          margin: EdgeInsets.symmetric(horizontal: 5),
+                          height: 200,
+                          width: 150,
+                          child: CachedNetworkImage(
+                            imageUrl:"https://image.tmdb.org/t/p/original${upcomingMoviesList[index].posterPath}",
+                            placeholder: (context, url) => CircularProgressIndicator(),
+                            fit: BoxFit.fill,
+                          ),
+                        );
+                      },
+                    ),
+            ),
+            SizedBox(height: 15),
+            Text(
+              "Top Rated Movies",
+              style: TextStyle(
+                color: white,
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
+              ),
+            ),
+            SizedBox(height: 15),
+            SizedBox(
+              height: 200,
+              child: isLoading
+                  ? Center(child: CircularProgressIndicator(color: white))
+                  : ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: topRatedMoviesList.length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          margin: EdgeInsets.symmetric(horizontal: 5),
+                          height: 200,
+                          width: 150,
+                          child: CachedNetworkImage(
+                            imageUrl:"https://image.tmdb.org/t/p/original${topRatedMoviesList[index].posterPath}",
+                            placeholder: (context, url) => CircularProgressIndicator(),
                             fit: BoxFit.fill,
                           ),
                         );
