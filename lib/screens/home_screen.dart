@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:netflix_clone/consts/color.dart';
 import 'package:netflix_clone/models/movie_model.dart';
+import 'package:netflix_clone/screens/movie_detail_screen.dart';
 import 'package:netflix_clone/services/movie_api.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -139,8 +140,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: ClipRRect(
                           borderRadius: BorderRadiusGeometry.circular(20),
                           child: CachedNetworkImage(
-                            imageUrl: "https://image.tmdb.org/t/p/original${nowPlayingMoviesList[index].posterPath}",
-                            placeholder: (context, url) => CircularProgressIndicator(color: white,),
+                            imageUrl:
+                                "https://image.tmdb.org/t/p/original${nowPlayingMoviesList[index].posterPath}",
+                            placeholder: (context, url) => Center(
+                              child: CircularProgressIndicator(color: white),
+                            ),
                             fit: BoxFit.fill,
                           ),
                         ),
@@ -223,14 +227,29 @@ class _HomeScreenState extends State<HomeScreen> {
                       scrollDirection: Axis.horizontal,
                       itemCount: trendingMoviesList.length,
                       itemBuilder: (context, index) {
-                        return Container(
-                          margin: EdgeInsets.symmetric(horizontal: 5),
-                          height: 200,
-                          width: 150,
-                          child: CachedNetworkImage(
-                            imageUrl:"https://image.tmdb.org/t/p/original${trendingMoviesList[index].posterPath}",
-                            placeholder: (context, url) => CircularProgressIndicator(),
-                            fit: BoxFit.fill,
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MovieDetailScreen(
+                                  movieModel: trendingMoviesList[index],
+                                ),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            margin: EdgeInsets.symmetric(horizontal: 5),
+                            height: 200,
+                            width: 150,
+                            child: CachedNetworkImage(
+                              imageUrl:
+                                  "https://image.tmdb.org/t/p/original${trendingMoviesList[index].posterPath}",
+                              placeholder: (context, url) => Center(
+                                child: CircularProgressIndicator(color: white),
+                              ),
+                              fit: BoxFit.fill,
+                            ),
                           ),
                         );
                       },
@@ -254,14 +273,29 @@ class _HomeScreenState extends State<HomeScreen> {
                       scrollDirection: Axis.horizontal,
                       itemCount: popularTvShowsList.length,
                       itemBuilder: (context, index) {
-                        return Container(
-                          margin: EdgeInsets.symmetric(horizontal: 5),
-                          height: 200,
-                          width: 150,
-                          child: CachedNetworkImage(
-                            imageUrl:"https://image.tmdb.org/t/p/original${popularTvShowsList[index].posterPath}",
-                            placeholder: (context, url) => CircularProgressIndicator(),
-                            fit: BoxFit.fill,
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MovieDetailScreen(
+                                  movieModel: popularTvShowsList[index],
+                                ),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            margin: EdgeInsets.symmetric(horizontal: 5),
+                            height: 200,
+                            width: 150,
+                            child: CachedNetworkImage(
+                              imageUrl:
+                                  "https://image.tmdb.org/t/p/original${popularTvShowsList[index].posterPath}",
+                              placeholder: (context, url) => Center(
+                                child: CircularProgressIndicator(color: white),
+                              ),
+                              fit: BoxFit.fill,
+                            ),
                           ),
                         );
                       },
@@ -285,14 +319,29 @@ class _HomeScreenState extends State<HomeScreen> {
                       scrollDirection: Axis.horizontal,
                       itemCount: upcomingMoviesList.length,
                       itemBuilder: (context, index) {
-                        return Container(
-                          margin: EdgeInsets.symmetric(horizontal: 5),
-                          height: 200,
-                          width: 150,
-                          child: CachedNetworkImage(
-                            imageUrl:"https://image.tmdb.org/t/p/original${upcomingMoviesList[index].posterPath}",
-                            placeholder: (context, url) => CircularProgressIndicator(),
-                            fit: BoxFit.fill,
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MovieDetailScreen(
+                                  movieModel: upcomingMoviesList[index],
+                                ),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            margin: EdgeInsets.symmetric(horizontal: 5),
+                            height: 200,
+                            width: 150,
+                            child: CachedNetworkImage(
+                              imageUrl:
+                                  "https://image.tmdb.org/t/p/original${upcomingMoviesList[index].posterPath}",
+                              placeholder: (context, url) => Center(
+                                child: CircularProgressIndicator(color: white),
+                              ),
+                              fit: BoxFit.fill,
+                            ),
                           ),
                         );
                       },
@@ -316,14 +365,29 @@ class _HomeScreenState extends State<HomeScreen> {
                       scrollDirection: Axis.horizontal,
                       itemCount: topRatedMoviesList.length,
                       itemBuilder: (context, index) {
-                        return Container(
-                          margin: EdgeInsets.symmetric(horizontal: 5),
-                          height: 200,
-                          width: 150,
-                          child: CachedNetworkImage(
-                            imageUrl:"https://image.tmdb.org/t/p/original${topRatedMoviesList[index].posterPath}",
-                            placeholder: (context, url) => CircularProgressIndicator(),
-                            fit: BoxFit.fill,
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MovieDetailScreen(
+                                  movieModel: topRatedMoviesList[index],
+                                ),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            margin: EdgeInsets.symmetric(horizontal: 5),
+                            height: 200,
+                            width: 150,
+                            child: CachedNetworkImage(
+                              imageUrl:
+                                  "https://image.tmdb.org/t/p/original${topRatedMoviesList[index].posterPath}",
+                              placeholder: (context, url) => Center(
+                                child: CircularProgressIndicator(color: white),
+                              ),
+                              fit: BoxFit.fill,
+                            ),
                           ),
                         );
                       },
