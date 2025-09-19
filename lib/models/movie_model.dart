@@ -19,9 +19,9 @@ class MovieModel {
     return MovieModel(
       title: json["title"] ?? json["name"],
       overview: json["overview"],
-      backdropPath: json["backdrop_path"],
-      posterPath: json["poster_path"],
-      releaseDate: json["release_date"] ?? json["first_air_date"],
+      backdropPath: json["backdrop_path"] ?? "",
+      posterPath: json["poster_path"] ?? "",
+      releaseDate: json["release_date"] ?? json["first_air_date"] ?? "",
       voteAverage: json["vote_average"],
     );
   }

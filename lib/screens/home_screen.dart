@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final popularTvResponse = await MovieApi.fetchPopularTvShows();
     final upcomingMoviesResponse = await MovieApi.fetchUpcomingMovies();
     final topRatedMoviesResponse = await MovieApi.fetchTopRatedMovies();
-
+    if (!mounted) return;
     setState(() {
       nowPlayingMoviesList = nowPlayingMoviesResponse;
       trendingMoviesList = trendingMovieResponse;
@@ -135,17 +135,36 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: PageView.builder(
                     itemCount: nowPlayingMoviesList.length,
                     itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: ClipRRect(
-                          borderRadius: BorderRadiusGeometry.circular(20),
-                          child: CachedNetworkImage(
-                            imageUrl:
-                                "https://image.tmdb.org/t/p/original${nowPlayingMoviesList[index].posterPath}",
-                            placeholder: (context, url) => Center(
-                              child: CircularProgressIndicator(color: white),
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MovieDetailScreen(
+                                movieModel: nowPlayingMoviesList[index],
+                              ),
                             ),
-                            fit: BoxFit.fill,
+                          );
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: ClipRRect(
+                            borderRadius: BorderRadiusGeometry.circular(20),
+                            child:
+                                nowPlayingMoviesList[index]
+                                    .posterPath
+                                    .isNotEmpty
+                                ? CachedNetworkImage(
+                                    imageUrl:
+                                        "https://image.tmdb.org/t/p/original${nowPlayingMoviesList[index].posterPath}",
+                                    placeholder: (context, url) => Center(
+                                      child: CircularProgressIndicator(
+                                        color: white,
+                                      ),
+                                    ),
+                                    fit: BoxFit.fill,
+                                  )
+                                : Icon(Icons.photo_size_select_actual),
                           ),
                         ),
                       );
@@ -242,14 +261,21 @@ class _HomeScreenState extends State<HomeScreen> {
                             margin: EdgeInsets.symmetric(horizontal: 5),
                             height: 200,
                             width: 150,
-                            child: CachedNetworkImage(
-                              imageUrl:
-                                  "https://image.tmdb.org/t/p/original${trendingMoviesList[index].posterPath}",
-                              placeholder: (context, url) => Center(
-                                child: CircularProgressIndicator(color: white),
-                              ),
-                              fit: BoxFit.fill,
-                            ),
+                            child:
+                                nowPlayingMoviesList[index]
+                                    .posterPath
+                                    .isNotEmpty
+                                ? CachedNetworkImage(
+                                    imageUrl:
+                                        "https://image.tmdb.org/t/p/original${trendingMoviesList[index].posterPath}",
+                                    placeholder: (context, url) => Center(
+                                      child: CircularProgressIndicator(
+                                        color: white,
+                                      ),
+                                    ),
+                                    fit: BoxFit.fill,
+                                  )
+                                : Icon(Icons.photo_size_select_actual),
                           ),
                         );
                       },
@@ -288,14 +314,21 @@ class _HomeScreenState extends State<HomeScreen> {
                             margin: EdgeInsets.symmetric(horizontal: 5),
                             height: 200,
                             width: 150,
-                            child: CachedNetworkImage(
-                              imageUrl:
-                                  "https://image.tmdb.org/t/p/original${popularTvShowsList[index].posterPath}",
-                              placeholder: (context, url) => Center(
-                                child: CircularProgressIndicator(color: white),
-                              ),
-                              fit: BoxFit.fill,
-                            ),
+                            child:
+                                nowPlayingMoviesList[index]
+                                    .posterPath
+                                    .isNotEmpty
+                                ? CachedNetworkImage(
+                                    imageUrl:
+                                        "https://image.tmdb.org/t/p/original${popularTvShowsList[index].posterPath}",
+                                    placeholder: (context, url) => Center(
+                                      child: CircularProgressIndicator(
+                                        color: white,
+                                      ),
+                                    ),
+                                    fit: BoxFit.fill,
+                                  )
+                                : Icon(Icons.photo_size_select_actual),
                           ),
                         );
                       },
@@ -334,14 +367,21 @@ class _HomeScreenState extends State<HomeScreen> {
                             margin: EdgeInsets.symmetric(horizontal: 5),
                             height: 200,
                             width: 150,
-                            child: CachedNetworkImage(
-                              imageUrl:
-                                  "https://image.tmdb.org/t/p/original${upcomingMoviesList[index].posterPath}",
-                              placeholder: (context, url) => Center(
-                                child: CircularProgressIndicator(color: white),
-                              ),
-                              fit: BoxFit.fill,
-                            ),
+                            child:
+                                nowPlayingMoviesList[index]
+                                    .posterPath
+                                    .isNotEmpty
+                                ? CachedNetworkImage(
+                                    imageUrl:
+                                        "https://image.tmdb.org/t/p/original${upcomingMoviesList[index].posterPath}",
+                                    placeholder: (context, url) => Center(
+                                      child: CircularProgressIndicator(
+                                        color: white,
+                                      ),
+                                    ),
+                                    fit: BoxFit.fill,
+                                  )
+                                : Icon(Icons.photo_size_select_actual),
                           ),
                         );
                       },
@@ -380,14 +420,21 @@ class _HomeScreenState extends State<HomeScreen> {
                             margin: EdgeInsets.symmetric(horizontal: 5),
                             height: 200,
                             width: 150,
-                            child: CachedNetworkImage(
-                              imageUrl:
-                                  "https://image.tmdb.org/t/p/original${topRatedMoviesList[index].posterPath}",
-                              placeholder: (context, url) => Center(
-                                child: CircularProgressIndicator(color: white),
-                              ),
-                              fit: BoxFit.fill,
-                            ),
+                            child:
+                                nowPlayingMoviesList[index]
+                                    .posterPath
+                                    .isNotEmpty
+                                ? CachedNetworkImage(
+                                    imageUrl:
+                                        "https://image.tmdb.org/t/p/original${topRatedMoviesList[index].posterPath}",
+                                    placeholder: (context, url) => Center(
+                                      child: CircularProgressIndicator(
+                                        color: white,
+                                      ),
+                                    ),
+                                    fit: BoxFit.fill,
+                                  )
+                                : Icon(Icons.photo_size_select_actual),
                           ),
                         );
                       },

@@ -26,13 +26,22 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
             children: [
               SizedBox(
                 height: 350,
-                child: CachedNetworkImage(
-                  imageUrl:
-                      "https://image.tmdb.org/t/p/original${widget.movieModel.backdropPath}",
-                  placeholder: (context, url) =>
-                      Center(child: CircularProgressIndicator(color: white)),
-                  fit: BoxFit.cover,
-                ),
+                child:
+                    widget.movieModel.posterPath.isNotEmpty ||
+                        widget.movieModel.posterPath.isNotEmpty
+                    ? CachedNetworkImage(
+                        imageUrl:
+                            "https://image.tmdb.org/t/p/original${widget.movieModel.backdropPath.isEmpty ? widget.movieModel.posterPath : widget.movieModel.backdropPath}",
+                        placeholder: (context, url) => Center(
+                          child: CircularProgressIndicator(color: white),
+                        ),
+                        fit: BoxFit.cover,
+                      )
+                    : Icon(
+                        Icons.photo_size_select_actual,
+                        size: 200,
+                        color: Colors.grey,
+                      ),
               ),
               Positioned(
                 right: 10,
@@ -98,10 +107,10 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
             child: Row(
               spacing: 20,
               children: [
-                Text(
+                Text(widget.movieModel.releaseDate.isNotEmpty?
                   DateFormat('yyyy').format(
                     DateFormat('y').parse(widget.movieModel.releaseDate),
-                  ),
+                  ):"",
                   style: TextStyle(color: white, fontSize: 17),
                 ),
                 Text("HD", style: TextStyle(color: Colors.grey, fontSize: 17)),
@@ -171,10 +180,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                     Icon(Icons.add, color: white, size: 40),
                     Text(
                       "My List",
-                      style: TextStyle(
-                        color: const Color.fromARGB(255, 62, 45, 45),
-                        fontSize: 15,
-                      ),
+                      style: TextStyle(color: Colors.grey, fontSize: 15),
                     ),
                   ],
                 ),
@@ -199,6 +205,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
               ],
             ),
           ),
+          SizedBox(height: 50),
         ],
       ),
     );
