@@ -2,8 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:netflix_clone/consts/color.dart';
 import 'package:netflix_clone/models/movie_model.dart';
+import 'package:netflix_clone/provider/movie_provider.dart';
 import 'package:netflix_clone/screens/movie_detail_screen.dart';
 import 'package:netflix_clone/services/movie_api.dart';
+import 'package:provider/provider.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -13,21 +15,12 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  List<MovieModel> trendingMoviesList = [];
   List<MovieModel> searchMoviesList = [];
   String movieName = "";
 
-  void fetchTopSearchMovie() async {
-    final trendingMovieResponse = await MovieApi.fetchTrendingMovies();
-
-    setState(() {
-      trendingMoviesList = trendingMovieResponse;
-    });
-  }
-
   void fetchSearchMovie(String movieName) async {
     final searchMovieResponse = await MovieApi.fetchSearchMovies(movieName);
-
+    if (!mounted) return;
     setState(() {
       searchMoviesList = searchMovieResponse;
     });
@@ -36,7 +29,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   void initState() {
     super.initState();
-    fetchTopSearchMovie();
+    context.read<MovieProvider>().fetchTrendingMovies();
   }
 
   @override
@@ -78,73 +71,81 @@ class _SearchScreenState extends State<SearchScreen> {
               SizedBox(height: 15),
               SizedBox(
                 child: movieName.isEmpty
-                    ? ListView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        scrollDirection: Axis.vertical,
-                        itemCount: trendingMoviesList.length,
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => MovieDetailScreen(
-                                    movieModel: trendingMoviesList[index],
+                    ? Consumer<MovieProvider>(
+                        builder: (context, provider, child) {
+                          return ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            scrollDirection: Axis.vertical,
+                            itemCount: provider.trendingMoviesList.length,
+                            itemBuilder: (context, index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => MovieDetailScreen(
+                                        movieModel:
+                                            provider.trendingMoviesList[index],
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: Container(
+                                  margin: EdgeInsets.only(bottom: 10),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      SizedBox(
+                                        height: 100,
+                                        width: 150,
+                                        child:
+                                            provider
+                                                .trendingMoviesList[index]
+                                                .posterPath
+                                                .isNotEmpty
+                                            ? CachedNetworkImage(
+                                                imageUrl:
+                                                    "https://image.tmdb.org/t/p/original${provider.trendingMoviesList[index].backdropPath}",
+                                                placeholder: (context, url) =>
+                                                    Center(
+                                                      child:
+                                                          CircularProgressIndicator(
+                                                            color: white,
+                                                          ),
+                                                    ),
+                                                fit: BoxFit.cover,
+                                              )
+                                            : Icon(
+                                                Icons.photo_size_select_actual,
+                                                color: Colors.grey,
+                                              ),
+                                      ),
+                                      SizedBox(
+                                        width: 100,
+                                        child: Text(
+                                          provider
+                                              .trendingMoviesList[index]
+                                              .title,
+                                          style: TextStyle(
+                                            color: white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15,
+                                          ),
+                                          maxLines: 2,
+                                        ),
+                                      ),
+                                      Icon(
+                                        Icons.play_circle_outline_outlined,
+                                        color: white,
+                                        size: 30,
+                                      ),
+                                    ],
                                   ),
                                 ),
                               );
                             },
-                            child: Container(
-                              margin: EdgeInsets.only(bottom: 10),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  SizedBox(
-                                    height: 100,
-                                    width: 150,
-                                    child:
-                                        trendingMoviesList[index]
-                                            .posterPath
-                                            .isNotEmpty
-                                        ? CachedNetworkImage(
-                                            imageUrl:
-                                                "https://image.tmdb.org/t/p/original${trendingMoviesList[index].backdropPath}",
-                                            placeholder: (context, url) =>
-                                                Center(
-                                                  child:
-                                                      CircularProgressIndicator(
-                                                        color: white,
-                                                      ),
-                                                ),
-                                            fit: BoxFit.cover,
-                                          )
-                                        : Icon(
-                                            Icons.photo_size_select_actual,
-                                            color: Colors.grey,
-                                          ),
-                                  ),
-                                  SizedBox(
-                                    width: 100,
-                                    child: Text(
-                                      trendingMoviesList[index].title,
-                                      style: TextStyle(
-                                        color: white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15,
-                                      ),
-                                      maxLines: 2,
-                                    ),
-                                  ),
-                                  Icon(
-                                    Icons.play_circle_outline_outlined,
-                                    color: white,
-                                    size: 30,
-                                  ),
-                                ],
-                              ),
-                            ),
                           );
                         },
                       )
