@@ -53,12 +53,8 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                     children: [
                       GestureDetector(
                         onTap: () => Navigator.pop(context),
-                        child: Container(
-                          padding: EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(100),
-                            color: Colors.black54,
-                          ),
+                        child: CircleAvatar(
+                          backgroundColor: Colors.black54,
                           child: Icon(
                             Icons.close_outlined,
                             color: white,
@@ -66,12 +62,8 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                           ),
                         ),
                       ),
-                      Container(
-                        padding: EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100),
-                          color: Colors.black54,
-                        ),
+                      CircleAvatar(
+                        backgroundColor: Colors.black54,
                         child: Icon(Icons.cast, color: white, size: 30),
                       ),
                     ],
@@ -107,10 +99,12 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
             child: Row(
               spacing: 20,
               children: [
-                Text(widget.movieModel.releaseDate.isNotEmpty?
-                  DateFormat('yyyy').format(
-                    DateFormat('y').parse(widget.movieModel.releaseDate),
-                  ):"",
+                Text(
+                  widget.movieModel.releaseDate.isNotEmpty
+                      ? DateFormat('yyyy').format(
+                          DateFormat('y').parse(widget.movieModel.releaseDate),
+                        )
+                      : "",
                   style: TextStyle(color: white, fontSize: 17),
                 ),
                 Text("HD", style: TextStyle(color: Colors.grey, fontSize: 17)),

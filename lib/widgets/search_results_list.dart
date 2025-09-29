@@ -56,6 +56,7 @@ class SearchResultsList extends StatelessWidget {
                       : Icon(
                           Icons.photo_size_select_actual,
                           color: Colors.grey,
+                          size: 70,
                         ),
                 ),
                 SizedBox(

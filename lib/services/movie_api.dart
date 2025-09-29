@@ -123,4 +123,23 @@ class MovieApi {
       print(e.toString());
     }
   }
+  static fetchMovieDetail(int id) async {
+    final url =
+        "https://api.themoviedb.org/3/movie/$id?api_key=3e8e9dff41190dbcd93ca6f3ae559886";
+    final uri = Uri.parse(url);
+    final response = await http.get(uri);
+
+    try {
+      if (response.statusCode == 200) {
+        final body = response.body;
+        final data = jsonDecode(body);
+        final movieList = List<MovieModel>.from(
+          (data["results"] as List).map((e) => MovieModel.fromJson(e)),
+        );
+        return movieList;
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 }

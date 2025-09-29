@@ -18,17 +18,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   bool isLoading = false;
 
-  void fetchMovie() async {
-    setState(() {
-      isLoading = true;
-    });
-
-    if (!mounted) return;
-    setState(() {
-      isLoading = false;
-    });
-  }
-
   @override
   void initState() {
     super.initState();
@@ -82,7 +71,73 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         CustomButton1(text: "Tv Shows"),
                         CustomButton1(text: "Movies"),
-                        CustomButton1(text: "Categories"),
+                        Container(
+                          padding: EdgeInsets.only(left: 10),
+                          decoration: BoxDecoration(
+                            color: black,
+                            borderRadius: BorderRadius.circular(35),
+                            border: Border.all(color: white),
+                          ),
+                          child: Row(
+                            children: [
+                              Text(
+                                "Categories",
+                                style: TextStyle(fontSize: 15, color: white),
+                              ),
+                              PopupMenuButton(
+                                color: Colors.black45,
+                                icon: Icon(
+                                  Icons.keyboard_arrow_down_outlined,
+                                  color: white,
+                                ),
+                                itemBuilder: (context) => [
+                                  PopupMenuItem(
+                                    padding: EdgeInsets.only(
+                                      top: 50,
+                                      left: 10,
+                                      bottom: 10,
+                                    ),
+                                    child: Text(
+                                      "Trending Movies on Netflix",
+                                      style: TextStyle(
+                                        color: Colors.white70,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+
+                                  PopupMenuItem(
+                                    child: Text(
+                                      "Popular TV Series - Most - Watch For You",
+                                      style: TextStyle(
+                                        color: Colors.white70,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  PopupMenuItem(
+                                    child: Text(
+                                      "Upcoming Movies",
+                                      style: TextStyle(
+                                        color: Colors.white70,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  PopupMenuItem(
+                                    child: Text(
+                                      "Top Rated Movies",
+                                      style: TextStyle(
+                                        color: Colors.white70,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -167,25 +222,25 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(height: 40),
                 MovieCategories(
                   categorieName: "Trending Movies on Netflix",
-                  isLoading: isLoading,
+                  isLoading: provider.isLoading,
                   categorie: provider.trendingMoviesList,
                 ),
                 SizedBox(height: 15),
                 MovieCategories(
                   categorieName: "Popular TV Series - Most - Watch For You",
-                  isLoading: isLoading,
+                  isLoading: provider.isLoading,
                   categorie: provider.popularTvShowsList,
                 ),
                 SizedBox(height: 15),
                 MovieCategories(
                   categorieName: "Upcoming Movies",
-                  isLoading: isLoading,
+                  isLoading: provider.isLoading,
                   categorie: provider.upcomingMoviesList,
                 ),
                 SizedBox(height: 15),
                 MovieCategories(
                   categorieName: "Top Rated Movies",
-                  isLoading: isLoading,
+                  isLoading: provider.isLoading,
                   categorie: provider.topRatedMoviesList,
                 ),
               ],
