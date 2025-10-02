@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:netflix_clone/models/movie_detail_model.dart';
 import 'package:netflix_clone/models/movie_model.dart';
 
 class MovieApi {
@@ -133,10 +134,8 @@ class MovieApi {
       if (response.statusCode == 200) {
         final body = response.body;
         final data = jsonDecode(body);
-        final movieList = List<MovieModel>.from(
-          (data["results"] as List).map((e) => MovieModel.fromJson(e)),
-        );
-        return movieList;
+        final movieDetail = MovieDetailModel.fromJson(data);
+        return movieDetail;
       }
     } catch (e) {
       print(e.toString());

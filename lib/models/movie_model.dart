@@ -1,4 +1,5 @@
 class MovieModel {
+  final int id;
   final String title;
   final String overview;
   final String backdropPath;
@@ -7,6 +8,7 @@ class MovieModel {
   final double voteAverage;
 
   MovieModel({
+    required this.id,
     required this.title,
     required this.overview,
     required this.backdropPath,
@@ -17,6 +19,7 @@ class MovieModel {
 
   factory MovieModel.fromJson(Map<String, dynamic> json) {
     return MovieModel(
+      id: json["id"],
       title: json["title"] ?? json["name"],
       overview: json["overview"],
       backdropPath: json["backdrop_path"] ?? "",

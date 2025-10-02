@@ -1,0 +1,96 @@
+class MovieDetailModel {
+  final String title;
+  final String overview;
+  final String backdropPath;
+  final String posterPath;
+  final String releaseDate;
+  final int runTime;
+
+  MovieDetailModel({
+    required this.title,
+    required this.backdropPath,
+    required this.overview,
+    required this.posterPath,
+    required this.releaseDate,
+    required this.runTime,
+  });
+
+  factory MovieDetailModel.fromJson(Map<String, dynamic> json) {
+    return MovieDetailModel(
+      title: json["original_title"],
+      backdropPath: json["backdrop_path"] ?? "",
+      overview: json["overview"],
+      posterPath: json["poster_path"]?? "",
+      releaseDate: json["release_date"] ?? "",
+      runTime: json["runtime"],
+    );
+  }
+}
+
+
+
+
+
+
+
+
+/*
+
+{
+    "adult": false,
+    "backdrop_path": "/zaShigpdqZugK8xe3sRdRgYV3SH.jpg",
+    "belongs_to_collection": null,
+    "budget": 0,
+    "genres": [
+        {
+            "id": 35,
+            "name": "Comedy"
+        },
+        {
+            "id": 10749,
+            "name": "Romance"
+        }
+    ],
+    "homepage": "",
+    "id": 768702,
+    "imdb_id": "tt14295864",
+    "origin_country": [
+        "RU"
+    ],
+    "original_language": "ru",
+    "original_title": "Love",
+    "overview": "Love Hotel. The best place to spend your holiday on February 14th. So this time the doors of the hotel are open for everyone who wants to make Valentine's Day special, wants to believe in love again, or at least not be alone on this day. Former classmates meet at a restaurant in honor of the 40th anniversary of graduation and old feelings flare up with renewed vigor. A jealous man tries to enter all the rooms on the floor to find his missing wife. A private detective and his attractive client arrange a spy show with wiretaps to bring out the scoundrel husband. An immigrant maid from Uzbekistan chooses between love for her young boy and money from his mother, given for her immediate flight home. And the life of a humble student who dreams of becoming a man in just one hour will never be the same after meeting the most talkative night butterfly in the city ...",
+    "popularity": 0.449,
+    "poster_path": "/hS2eFigVGchssBaRlbt4hkRs09e.jpg",
+    "production_companies": [
+        {
+            "id": 140719,
+            "logo_path": null,
+            "name": "Sverdlovsk",
+            "origin_country": "RU"
+        }
+    ],
+    "production_countries": [
+        {
+            "iso_3166_1": "RU",
+            "name": "Russia"
+        }
+    ],
+    "release_date": "2020-12-24",
+    "revenue": 0,
+    "runtime": 0,
+    "spoken_languages": [
+        {
+            "english_name": "Russian",
+            "iso_639_1": "ru",
+            "name": "Pусский"
+        }
+    ],
+    "status": "Released",
+    "tagline": "",
+    "title": "Love",
+    "video": false,
+    "vote_average": 6.0,
+    "vote_count": 43
+}
+ */
