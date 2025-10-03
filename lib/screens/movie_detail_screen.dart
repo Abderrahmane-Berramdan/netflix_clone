@@ -49,6 +49,11 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    String genresText = "";
+    if (movieDetail != null) {
+      genresText = movieDetail!.genres.map((genre) => genre.name).join(" | ");
+    }
+
     return Scaffold(
       backgroundColor: black,
       body: isLoading
@@ -213,10 +218,22 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                     ],
                   ),
                 ),
+                SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Center(
+                    child: Text(
+                      genresText,
+                      style: TextStyle(fontSize: 16, color: Colors.grey[300]),
+                    ),
+                  ),
+                ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                   child: Text(
                     movieDetail!.overview,
+                    maxLines: 5,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(fontSize: 15, color: Colors.grey),
                   ),
                 ),
@@ -255,7 +272,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                     ],
                   ),
                 ),
-                SizedBox(height: 50),
+                SizedBox(height: 20),
               ],
             ),
     );

@@ -4,6 +4,7 @@ class MovieDetailModel {
   final String backdropPath;
   final String posterPath;
   final String releaseDate;
+  final List<Genre> genres;
   final int runTime;
 
   MovieDetailModel({
@@ -12,6 +13,7 @@ class MovieDetailModel {
     required this.overview,
     required this.posterPath,
     required this.releaseDate,
+    required this.genres,
     required this.runTime,
   });
 
@@ -20,10 +22,24 @@ class MovieDetailModel {
       title: json["original_title"],
       backdropPath: json["backdrop_path"] ?? "",
       overview: json["overview"],
-      posterPath: json["poster_path"]?? "",
+      posterPath: json["poster_path"] ?? "",
       releaseDate: json["release_date"] ?? "",
+      genres: (json["genres"] as List)
+          .map((genre) => Genre.fromJson(genre))
+          .toList(),
       runTime: json["runtime"],
     );
+  }
+}
+
+class Genre {
+  final int id;
+  final String name;
+
+  Genre({required this.id, required this.name});
+
+  factory Genre.fromJson(Map<String, dynamic> json) {
+    return Genre(id: json["id"], name: json["name"]);
   }
 }
 
