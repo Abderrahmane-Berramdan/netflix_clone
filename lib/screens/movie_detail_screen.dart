@@ -6,6 +6,8 @@ import 'package:netflix_clone/consts/color.dart';
 import 'package:netflix_clone/models/movie_detail_model.dart';
 import 'package:netflix_clone/models/movie_model.dart';
 import 'package:netflix_clone/services/movie_api.dart';
+import 'package:netflix_clone/widgets/custom_buttom4.dart';
+import 'package:netflix_clone/widgets/custom_button3.dart';
 
 class MovieDetailScreen extends StatefulWidget {
   final MovieModel movieModel;
@@ -147,9 +149,14 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                     ],
                   ),
                 ),
-                SizedBox(height: 20),
+                // SizedBox(height: 20),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  padding: const EdgeInsets.only(
+                    left: 10,
+                    right: 10,
+                    top: 20,
+                    bottom: 10,
+                  ),
                   child: Row(
                     spacing: 20,
                     children: [
@@ -172,59 +179,75 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                     ],
                   ),
                 ),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: white,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Row(
-                    spacing: 5,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.play_arrow, size: 30),
-                      Text(
-                        "Play",
-                        style: TextStyle(
-                          color: black,
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
+                CustomButtom4(
+                  text: "Play",
+                  icon: Icons.play_arrow,
+                  iconColor: black,
+                  backgroundColor: white,
                 ),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 10),
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[800],
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Row(
-                    spacing: 5,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.download, color: white, size: 30),
-                      Text(
-                        "Download",
-                        style: TextStyle(
-                          color: white,
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
+                CustomButtom4(
+                  text: "Download",
+                  icon: Icons.download,
+                  iconColor: white,
+                  backgroundColor: Colors.grey[800],
                 ),
+                // Container(
+                //   margin: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                //   padding: EdgeInsets.all(10),
+                //   decoration: BoxDecoration(
+                //     color: ,
+                //     borderRadius: BorderRadius.circular(10),
+                //   ),
+                //   child: Row(
+                //     spacing: 5,
+                //     mainAxisAlignment: MainAxisAlignment.center,
+                //     children: [
+                //       Icon(, size: 30),
+                //       Text(
+                //         ,
+                //         style: TextStyle(
+                //           color: black,
+                //           fontSize: 17,
+                //           fontWeight: FontWeight.bold,
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                // Container(
+                //   margin: EdgeInsets.symmetric(horizontal: 10),
+                //   padding: EdgeInsets.all(10),
+                //   decoration: BoxDecoration(
+                //     color: ,
+                //     borderRadius: BorderRadius.circular(10),
+                //   ),
+                //   child: Row(
+                //     spacing: 5,
+                //     mainAxisAlignment: MainAxisAlignment.center,
+                //     children: [
+                //       Icon(, color: , size: 30),
+                //       Text(
+                //        ,
+                //         style: TextStyle(
+                //           color: white,
+                //           fontSize: 17,
+                //           fontWeight: FontWeight.bold,
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Center(
                     child: Text(
                       genresText,
-                      style: TextStyle(fontSize: 16, color: Colors.grey[300]),
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: white,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                 ),
@@ -242,33 +265,9 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Column(
-                        children: [
-                          Icon(Icons.add, color: white, size: 40),
-                          Text(
-                            "My List",
-                            style: TextStyle(color: Colors.grey, fontSize: 15),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Icon(Iconsax.like_15, color: white, size: 40),
-                          Text(
-                            "Rate",
-                            style: TextStyle(color: Colors.grey, fontSize: 15),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Icon(Icons.share, color: white, size: 40),
-                          Text(
-                            "Share",
-                            style: TextStyle(color: Colors.grey, fontSize: 15),
-                          ),
-                        ],
-                      ),
+                      CustomButton3(icon: Icons.add, text: "My List"),
+                      CustomButton3(icon: Iconsax.like_15, text: "Rate"),
+                      CustomButton3(icon: Icons.share, text: "Share"),
                     ],
                   ),
                 ),

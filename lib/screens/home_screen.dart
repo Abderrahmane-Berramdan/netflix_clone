@@ -204,13 +204,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             CustomButton2(
                               text: "Play",
                               icon: Icons.play_arrow,
-                              color: black,
+                              iconColor: black,
                               backgroundColor: white,
                             ),
                             CustomButton2(
                               text: "My List",
                               icon: Icons.add,
-                              color: white,
+                              iconColor: white,
                               backgroundColor: Colors.grey[800],
                             ),
                           ],
